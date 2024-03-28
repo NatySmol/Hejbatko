@@ -21,10 +21,10 @@ int in4 = P3;
 
 // proměnná pro nastavení rychlosti,
 // se zvětšujícím se číslem se rychlost zmenšuje
-int rychlost = 1;
+int rychlost = 500;
 //
 int uhel = 360;
-
+uint8_t pins[8] = {P0, P1, P2, P3, P4, P5, P6, P7};
 /*
 ex1.pinMode(P0, OUTPUT);
 ex1.pinMode(P1, OUTPUT);
@@ -32,92 +32,123 @@ ex1.pinMode(P2, OUTPUT);
 ex1.pinMode(P3, OUTPUT); */
 
 void setup(){
+  
   //něco tam doplnit
-  //Serial.begin(115200);
-  pinMode(P0, OUTPUT);
-  ex1.pinMode(P1, OUTPUT);
-  ex1.pinMode(P2, OUTPUT);
-  ex1.pinMode(P3, OUTPUT);
-  ex1.pinMode(P4, OUTPUT);
-  ex1.pinMode(P5, OUTPUT);
-  ex1.pinMode(P6, OUTPUT);
-  ex1.pinMode(P7, OUTPUT);
+  Serial.begin(115200);
   ex1.begin();
+  for (int i = 0; i < 8; i++)
+    ex1.pinMode(pins[i], OUTPUT);
 }
 
-void setupHigh(int pinik) {
-	delay(200);
-  ex1.pinMode(pinik, OUTPUT);
-	ex1.digitalWrite(pinik, HIGH);
+void setupHigh(int j) {
+  //delayMicroseconds(200);
+  ex1.digitalWrite(pins[j], HIGH);
 }
 
-void setupLow(int pinik) {
-	delay(200);
-  ex1.pinMode(pinik, OUTPUT);
-	ex1.digitalWrite(pinik, LOW);
+void setupLow(int j) {
+  //delayMicroseconds(200);
+  ex1.digitalWrite(pins[j], LOW);
 }
-
 
 void krok1(){
-  setupHigh(in1);
-  setupLow(in2);
-  setupLow(in3);
-  setupLow(in4);
-  delay(rychlost);
+  setupHigh(0);
+  setupLow(1);
+  setupLow(2);
+  setupLow(3);
+  
+  setupHigh(4);
+  setupLow(5);
+  setupLow(6);
+  setupLow(7);
+  delayMicroseconds(rychlost);
+
 }
 void krok2(){
-  setupHigh(in1);
-  setupHigh(in2);
-  setupLow(in3);
-  setupLow(in4);
-  delay(rychlost);
+  setupHigh(0);
+  setupHigh(1);
+  setupLow(2);
+  setupLow(3);
+  setupHigh(4);
+  setupHigh(5);
+  setupLow(6);
+  setupLow(7);
+  delayMicroseconds(rychlost);
 }
 void krok3(){
-  setupLow(in1);
-  setupHigh(in2);
-  setupLow(in3);
-  setupLow(in4);
-  delay(rychlost);
+  setupLow(0);
+  setupHigh(1);
+  setupLow(2);
+  setupLow(3);
+
+  setupLow(4);
+  setupHigh(5);
+  setupLow(6);
+  setupLow(7);
+  delayMicroseconds(rychlost);
 }
 
 void krok4(){
-  setupLow(in1);
-  setupHigh(in2);
-  setupHigh(in3);
-  setupLow(in4);
-  delay(rychlost);
+  setupLow(0);
+  setupHigh(1);
+  setupHigh(2);
+  setupLow(3);
+
+  setupLow(4);
+  setupHigh(5);
+  setupHigh(6);
+  setupLow(7);
+  delayMicroseconds(rychlost);
 }
 
 void krok5(){
-  setupLow(in1);
-  setupLow(in2);
-  setupHigh(in3);
-  setupLow(in4);
-  delay(rychlost);
+  setupLow(0);
+  setupLow(1);
+  setupHigh(2);
+  setupLow(3);
+
+  setupLow(4);
+  setupLow(5);
+  setupHigh(6);
+  setupLow(7);
+  delayMicroseconds(rychlost);
 }
 
 void krok6(){
-  setupLow(in1);
-  setupLow(in2);
-  setupHigh(in3);
-  setupHigh(in4);
-  delay(rychlost);
+  setupLow(0);
+  setupLow(1);
+  setupHigh(2);
+  setupHigh(3);
+
+  setupLow(4);
+  setupLow(5);
+  setupHigh(6);
+  setupHigh(7);
+  delayMicroseconds(rychlost);
 }
 
 void krok7(){
-  setupLow(in1);
-  setupLow(in2);
-  setupLow(in3);
-  setupHigh(in4);
-  delay(rychlost);
+  setupLow(0);
+  setupLow(1);
+  setupLow(2);
+  setupHigh(3);
+  
+  setupLow(4);
+  setupLow(5);
+  setupLow(6);
+  setupHigh(7);
+  delayMicroseconds(rychlost);
 }
 
 void krok8(){
-  setupHigh(in1);
-  setupLow(in2);
-  setupLow(in3);
-  setupHigh(in4);
-  delay(rychlost);
+  setupHigh(0);
+  setupLow(1);
+  setupLow(2);
+  setupHigh(3);
+  setupHigh(4);
+  setupLow(5);
+  setupLow(6);
+  setupHigh(7);
+  delayMicroseconds(rychlost);
 }
 
 void rotacePoSmeru() {
@@ -143,39 +174,23 @@ void rotaceProtiSmeru() {
 
 
 void loop() {
-  digitalWrite(P0, LOW);
-  delay(1000);
-  ex1.digitalWrite(P1, LOW);
-  delay(1000);
-  ex1.digitalWrite(P2, LOW);
-  delay(1000);
-  ex1.digitalWrite(P3, LOW);
-  delay(1000);
-  ex1.digitalWrite(P4, LOW);
-  delay(1000);
-  ex1.digitalWrite(P5, LOW);
-  delay(1000);
-  ex1.digitalWrite(P6, LOW);
-  delay(1000);
-  ex1.digitalWrite(P7, LOW);
 
-
-  delay(1000);
-  /*
-  delay(1000);
   // plná rotace o 360 stupňů = 512 volání
   // funkce rotacePoSmeru() či rotaceProtiSmeru()
-  for(int i=0;i<(uhel*64/45);i++){
-    rotacePoSmeru();
-  }
-  // pauza po dobu 1 vteřiny
-  delay(1000);
   
   for(int i=0;i<(uhel*64/45);i++){
-    rotaceProtiSmeru();
+    rotacePoSmeru();
+    
   }
+  delay(1000);
+  
   // pauza po dobu 1 vteřiny
-  delay(1000);*/
+  
+  /*
+  for(int i=0;i<(uhel*64/45);i++){
+    rotaceProtiSmeru();
+  } */
+  // pauza po dobu 1 vteřiny
   }
 
 
